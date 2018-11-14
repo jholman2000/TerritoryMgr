@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using TerritoryMgr.Models;
 
 namespace TerritoryMgr.Controllers
 {
-    public class PublishersController : ApiController
+    public class PublisherController : BaseController
     {
         // GET api/values
         public IEnumerable<string> Get()
@@ -16,9 +15,19 @@ namespace TerritoryMgr.Controllers
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public Publisher Get(int id)
         {
-            return "value";
+            using (var conn = Connection)
+            {
+                var sql = $"select * from terr_Publisher where Id={id};";
+
+                var results = GetListFromSql<Publisher>(sql).FirstOrDefault();
+                //conn.Open();
+                //var multi = conn.QueryMultiple(sql);
+
+                //var data = multi.Read<Territory>().FirstOrDefault();
+                return results;
+            }
         }
 
         // POST api/values

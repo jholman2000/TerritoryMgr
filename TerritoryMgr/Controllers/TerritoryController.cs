@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Dapper;
+﻿using System.Linq;
 using TerritoryMgr.Models;
 
 namespace TerritoryMgr.Controllers
@@ -17,11 +11,12 @@ namespace TerritoryMgr.Controllers
             {
                 var sql = $"select * from terr_Territory where Id={id};";
 
-                conn.Open();
-                var multi = conn.QueryMultiple(sql);
+                var results = GetListFromSql<Territory>(sql).FirstOrDefault();
+                //conn.Open();
+                //var multi = conn.QueryMultiple(sql);
 
-                var data = multi.Read<Territory>().FirstOrDefault();
-                return data;
+                //var data = multi.Read<Territory>().FirstOrDefault();
+                return results;
             }
         }
     }
