@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
@@ -9,9 +10,8 @@ using System.Web.Http;
 using System.Web.Script.Serialization;
 using Dapper;
 using Dapper.Contrib.Extensions;
-using System.Configuration;
 
-namespace hlcWeb.Controllers.Api
+namespace TerritoryMgr.Controllers
 {
     public class BaseController : ApiController
     {
@@ -39,7 +39,7 @@ namespace hlcWeb.Controllers.Api
         private string GetConnectionString()
         {
             ObjectCache cache = MemoryCache.Default;
-            var connString = cache["HLCConnection"]?.ToString();
+            var connString = cache["TerrConnection"]?.ToString();
 
             if (string.IsNullOrEmpty(connString))
             {
@@ -49,7 +49,7 @@ namespace hlcWeb.Controllers.Api
                 switch (environment)
                 {
                     case "LOCAL":
-                        connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\CorpApps\Sandbox\hlcWeb\hlcWeb\App_Data\hlcWeb_local.mdf;Integrated Security=True";
+                        connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\CorpApps\Sandbox\TerritoryMgr\TerritoryMgr\App_Data\TerritoryMgr.mdf;Integrated Security=True";
                         break;
 
                     default:
@@ -61,7 +61,7 @@ namespace hlcWeb.Controllers.Api
                 }
 
                 if (connString != null)
-                    cache.Add("HLCConnection", connString,
+                    cache.Add("TerrConnection", connString,
                         new CacheItemPolicy {Priority = CacheItemPriority.NotRemovable});
             }
 
