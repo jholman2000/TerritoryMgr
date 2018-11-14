@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace TerritoryMgr.Controllers
 {
-    public class ValuesController : ApiController
+    public class PublishersController : ApiController
     {
         // GET api/values
         public IEnumerable<string> Get()
