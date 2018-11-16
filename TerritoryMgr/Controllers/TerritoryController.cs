@@ -1,23 +1,31 @@
 ﻿using System.Linq;
+using Dapper;
 using TerritoryMgr.Models;
+using TerritoryMgr.ViewModels;
 
 namespace TerritoryMgr.Controllers
 {
     public class TerritoryController : BaseController
     {
-        public Territory GetTerritory(int id)
+        public TerritoryViewModel GetTerritory(int id)
         {
+            var model = new TerritoryViewModel();
+
             using (var conn = Connection)
             {
-                var sql = $"select * from terr_Territory where Id={id};";
+                var sql = $"select * from terr_Territory where Id={id};" +
+                    $"select * from terr_Address where TerritoryId={id};" +
+                    $"select * from terr_Publisher where Id=(select PublisherId from terr_Territory where Id={id});";
 
-                var results = GetListFromSql<Territory>(sql).FirstOrDefault();
-                //conn.Open();
-                //var multi = conn.QueryMultiple(sql);
+                conn.Open();
+                var multi = conn.QueryMultiple(sql);
 
-                //var data = multi.Read<Territory>().FirstOrDefault();
-                return results;
+                model.Territory = multi.Read<Territory>().FirstOrDefault();
+                model.Addresses = multi.Read<Address>().ToList();
+                model.Publisher = multi.Read<Publisher>().FirstOrDefault();
             }
+
+            return model;
         }
     }
 }

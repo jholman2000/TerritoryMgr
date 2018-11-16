@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Dapper.Contrib.Extensions;
+﻿using Dapper.Contrib.Extensions;
 
 namespace TerritoryMgr.Models
 {
@@ -17,7 +13,8 @@ namespace TerritoryMgr.Models
         public bool IsElder { get; set; }
         public bool IsGroupOverseer { get; set; }
 
-        [Computed] public string FullName => FirstName + " " + LastName;
+        [Computed]
+        public string FullName => FirstName + " " + LastName;
 
     }
 }
