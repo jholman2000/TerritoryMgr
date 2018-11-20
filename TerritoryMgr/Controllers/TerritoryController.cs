@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Web.Http;
 using Dapper;
+using Dapper.Contrib.Extensions;
 using TerritoryMgr.Models;
 using TerritoryMgr.ViewModels;
 
@@ -26,6 +29,29 @@ namespace TerritoryMgr.Controllers
             }
 
             return model;
+        }
+
+        [HttpPost]
+        public bool Save([FromBody]Territory model)
+        {
+            try
+            {
+                if (model.Id == 0)
+                {
+                    Connection.Insert(model);
+                }
+                else
+                {
+                    Connection.Update(model);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

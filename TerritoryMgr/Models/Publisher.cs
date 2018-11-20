@@ -4,6 +4,13 @@ namespace TerritoryMgr.Models
 {
     public class Publisher
     {
+        public Publisher()
+        {
+            IsElder = false;
+            IsPioneer = false;
+            IsGroupOverseer = false;
+        }
+
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
