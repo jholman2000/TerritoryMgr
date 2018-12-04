@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using static TerritoryMgr.Models.AddressCodeDescription;
+using System.Runtime.InteropServices.ComTypes;
+using TerritoryMgr.Infrastructure;
 
 namespace TerritoryMgr.Models
 {
@@ -17,18 +16,32 @@ namespace TerritoryMgr.Models
         public bool Possible { get; set; }
         public bool DoNotKnock { get; set; }
         public string Comment { get; set; }
+
+        public string CodeDescription => Code.EnumDescription();
     }
 
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    
     public enum AddressCode
     {
         [Description(AddressCodeDescription.NotAtHome)]
-        NotAtHome=0
-
+        NotAtHome=0,
+        [Description(AddressCodeDescription.NotInterested)]
+        NotInterested = 1,
+        [Description(AddressCodeDescription.Man)]
+        Man = 2,
+        [Description(AddressCodeDescription.Woman)]
+        Woman = 3,
+        [Description(AddressCodeDescription.Child)]
+        Child = 4
     }
 
     public static class AddressCodeDescription
     {
         public const string NotAtHome = "No en casa";
+        public const string NotInterested = "No interesado";
+        public const string Man = "Hombre";
+        public const string Woman = "Mujer";
+        public const string Child = "Joven";
+        
     }
 }
