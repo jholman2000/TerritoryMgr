@@ -8,8 +8,16 @@ using TerritoryMgr.ViewModels;
 
 namespace TerritoryMgr.Controllers
 {
+    /// <summary>
+    /// Provides Territory information
+    /// </summary>
     public class TerritoryController : BaseController
     {
+        /// <summary>
+        /// Get all details for a given Territory
+        /// </summary>
+        /// <param name="id">ID assigned to the Territory</param>
+        /// <returns>Territory details</returns>
         public TerritoryViewModel GetTerritory(int id)
         {
             var model = new TerritoryViewModel();
